@@ -1,0 +1,49 @@
+body{
+    background: url('https://static.vecteezy.com/system/resources/thumbnails/006/415/042/small/abstract-blurred-color-gradient-background-free-vector.jpg') no-repeat center fixed;
+    background-size: cover;
+    position: relative;
+}
+
+.form-container {
+    position: abosolute;
+    height: auto;
+    display:flex;
+    justify-content: center;
+}
+
+.form-box{
+    width: 400px;
+    align-items: center;
+    background: rgba(255,255,255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.login-form, .signup-form{
+    padding: 10%;
+}   
+
+.form-floating{
+    transform: scale(85%);
+}
+
+.sub-btn{
+    height: 50px;
+    transform: scale(85%);
+    font-size: 20px;
+    border-radius: 8px;
+    color: white;
+    background: transparent;
+    border: 1px solid #fff;
+}
+.sub-btn:hover{
+    cursor: pointer;
+    transition: all .1s ease;
+    background: linear-gradient(to right,#ff7b9a , #e53935);
+    font-weight: 600;
+    border: none;
+}
+
