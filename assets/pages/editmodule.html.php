@@ -26,10 +26,65 @@ if (isset($_SESSION['user'])) {
                     <div class="card-body">
                         <h5 class="card-title">' . $module['module_name'] . '</h5>
                         <p class="card-text">Module ID: ' . $module['module_id'] . '</p>
-                        <a href="#" class="btn btn-primary">Edit Module</a>
-                        <a href="#" class="btn btn-danger">Delete Module</a>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModuleModal' . $module['module_id'] . '">Edit Module</button>
+                        <button class="btn btn-danger">Delete Module</button>
                     </div>
                 </div>';
+
+            // Edit Module Modal
+            echo '<div class="modal fade" id="editModuleModal' . $module['module_id'] . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Edit Module</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post">
+                                    <input type="hidden" name="edit_module_id" value="' . $module['module_id'] . '">
+                                    <div class="form-floating mt-1">
+                                        <input type="text" class="form-control rounded-0" name="edited_module_name" placeholder="Module Name" value="' . $module['module_name'] . '">
+                                        <label for="floatingInput">Edited Module Name</label>
+                                    </div>
+                                    <div class="mt-3 d-flex justify-content-center align-items-center">
+                                        <button class="btn btn-primary" type="submit" name="update_module">Update Module</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>';
+        }
+
+        // Handle update module
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_module'])) {
+            $editModuleId = $_POST['edit_module_id'];
+            $editedModuleName = $_POST['edited_module_name'];
+
+            // Update the module name in the database
+            $updateStmt = $pdo->prepare("UPDATE modules SET module_name = ? WHERE module_id = ? AND user_id = ?");
+            $updateStmt->execute([$editedModuleName, $editModuleId, $user['user_id']]);
+
+            echo '<script>
+                    alert("Module updated successfully!");
+                    window.location.href = window.location.href; // Refresh the page
+                  </script>';
+            exit();
+        }
+
+        // Handle delete module
+        if (isset($_GET['delete_module_id'])) {
+            $deleteModuleId = $_GET['delete_module_id'];
+
+            // Delete the module from the database
+            $deleteStmt = $pdo->prepare("DELETE FROM modules WHERE module_id = ? AND user_id = ?");
+            $deleteStmt->execute([$deleteModuleId, $user['user_id']]);
+
+            echo '<script>
+                    alert("Module deleted successfully!");
+                    window.location.href = window.location.href; // Refresh the page
+                  </script>';
+            exit();
         }
         ?>
 
@@ -56,6 +111,7 @@ if (isset($_SESSION['user'])) {
 
             echo '<script>
                     alert("Module added successfully!");
+                    window.location.href = window.location.href; // Refresh the page
                   </script>';
             exit();
         }
