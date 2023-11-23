@@ -19,6 +19,10 @@ if (!$pagecount) {
     showPage('header', ['page_title' => 'Edit Module']);
     showPage('navbar');
     showPage('editmodule');
+} elseif (isset($_GET['sendmail'])) {
+    showPage('header', ['page_title' => 'Contact Admin']);
+    showPage('navbar');
+    showPage('sendmail');
 } elseif (isset($_GET['login'])) {
     showPage('header', ['page_title' => 'Login']);
     showPage('login');

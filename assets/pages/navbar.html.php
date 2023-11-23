@@ -28,6 +28,9 @@ if (isset($_SESSION['user'])) {
                     <li class="nav-item">
                         <a class="nav-link text-dark" data-bs-toggle="modal" data-bs-target="#addpost" href="#"><i class="bi bi-plus-square-fill"></i></a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="?sendmail"><i class="bi bi-envelope-arrow-up-fill"></i></a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
