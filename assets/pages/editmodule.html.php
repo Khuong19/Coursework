@@ -31,16 +31,13 @@ if (isset($_SESSION['user'])) {
                         <p class="card-text">Module ID: ' . $module['module_id'] . '</p>
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModuleModal' . $module['module_id'] . '">Edit Module</button>
                         
-                        <form method="post" style="display: inline;">
+                        <form method="post">
                             <input type="hidden" name="delete_module_id" value="' . $module['module_id'] . '">
                             <button class="btn btn-danger" type="submit" name="delete_module">Delete Module</button>
                         </form>
                     </div>
                 </div>';
-
-            
         }
-
 
         // Handle delete module
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_module'])) {
@@ -48,7 +45,7 @@ if (isset($_SESSION['user'])) {
 
             // Delete the module from the database
             $deleteStmt = $pdo->prepare("DELETE FROM modules WHERE module_id = ? AND user_id = ?");
-            $deleteStmt->execute([$deleteModuleId, $user['user_id']]);
+            $deleteStmt->execute([$deleteModuleId, $user['user_id']);
 
             echo '<script>
                     alert("Module deleted successfully!");
