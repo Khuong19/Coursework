@@ -43,7 +43,7 @@ if (isset($_SESSION['user'])) {
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="?signup">Logout</a></li>
+                            <li><a class="dropdown-item" href="?login">Logout</a></li>
                         </ul>
                     </li>
     
