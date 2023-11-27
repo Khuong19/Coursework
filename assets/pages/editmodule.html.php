@@ -45,12 +45,12 @@ if (isset($_SESSION['user'])) {
 
             // Delete the module from the database
             $deleteStmt = $pdo->prepare("DELETE FROM modules WHERE module_id = ? AND user_id = ?");
-            $deleteStmt->execute([$deleteModuleId, $user['user_id']);
+            $deleteStmt->execute([$deleteModuleId, $user['user_id']]);
 
             echo '<script>
                     alert("Module deleted successfully!");
                     window.location.href = window.location.href;
-                  </script>';
+                </script>';
             exit();
         }
         ?>
