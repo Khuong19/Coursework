@@ -9,7 +9,7 @@ if (isset($_SESSION['user'])) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['postBtn'])) {
     // Retrieve form data
-    $postText = $_POST['post_text'];
+    $postText = mysqli_real_escape_string($connection, $_POST["post_text"]);
 
     // Check if a file is selected
     if (!empty($_FILES['post_image']['name'])) {

@@ -9,8 +9,8 @@ if (isset($_SESSION['user'])) {
     // Check if the form is submitted
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_comment'])) {
         // Retrieve form data
-        $postId = $_POST['post_id'];
-        $commentText = $_POST['comment_text'];
+        $postId = mysqli_real_escape_string($connection, $_POST["post_id"]);
+        $commentText = mysqli_real_escape_string($connection, $_POST["comment_text"]);
 
         // Insert the new comment into the database
         $stmt = $pdo->prepare("INSERT INTO comments (post_id, user_id, comment_text) VALUES (?, ?, ?)");

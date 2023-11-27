@@ -3,7 +3,10 @@
 session_start();
 
 include 'DatabaseConnection.php';
-
+if (isset($_SESSION['user'])) {
+    // Access user data
+    $user = $_SESSION['user'];
+}
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
     $newEmail = $_POST["new_email"];

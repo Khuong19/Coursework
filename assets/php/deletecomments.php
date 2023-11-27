@@ -4,7 +4,7 @@ include 'DatabaseConnection.php';
 // Check if the comment_id is set and not empty
 if (isset($_POST['comment_id']) && !empty($_POST['comment_id'])) {
     // Get the comment_id from the POST data
-    $commentId = $_POST['comment_id'];
+    $commentId = mysqli_real_escape_string($connection, $_POST["comment_id"]);
 
     try {
         // Prepare and execute the DELETE query

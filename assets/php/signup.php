@@ -3,12 +3,15 @@
 session_start();
 
 include 'DatabaseConnection.php';
-
+if (isset($_SESSION['user'])) {
+    // Access user data
+    $user = $_SESSION['user'];
+}
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
     $username = $_POST["username"];
     $email = $_POST["email"];
-    $password = password_hash($_POST["password"], PASSWORD_DEFAULT); // Hash the password for security
+    $password = password_hash($_POST["password"], PASSWORD_BCRYPT); // Hash the password for security
 
     // Check if the username or email already exists in the database
     $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
