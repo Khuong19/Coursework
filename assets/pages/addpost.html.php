@@ -1,4 +1,27 @@
-<div class="container" id="addpost" >
+<?php
+include 'assets/php/DatabaseConnection.php';
+session_start();
+if (isset($_SESSION['user'])) {
+    // Access user data
+    $user = $_SESSION['user'];
+} else {
+    // Redirect to the login page if the user is not logged in
+    header("Location: ../../?login");
+    exit();
+}
+
+try {
+        $sql = "SELECT module_name, module_id FROM modules WHERE user_id = ?";
+        $query = $pdo->prepare($sql);
+        $query->execute([$user['user_id']]);
+        $modules = $query->fetchAll();
+    
+    } catch (PDOException $e) {
+        echo 'Error fetching modules: ' . $e->getMessage();
+    }
+?>
+
+<div class="container" id="addpost">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,13 +29,13 @@
             </div>
             <div class="modal-body">
                 <img src="" style="display:none" id='post_image' class="w-100 rounded border">
-                <form method="post" action="../php/addpost.php" enctype="multipart/form-data">
+                <form method="post" action="assets/php/addpost.php" enctype="multipart/form-data">
                     <select class="form-select" name="module_id">
-
+                        <option selected>Select Module</option>
                         <?php foreach ($modules as $module):?>
+                            
                             <option value="<?php echo $module['module_id']; ?>">
                                 <?php echo $module['module_name']; ?>
-                                <?php echo $user['user_id']; ?>
                             </option>
                         <?php endforeach;?>
                     </select>
