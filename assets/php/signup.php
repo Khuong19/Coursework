@@ -1,6 +1,4 @@
 <?php
-// Start the session
-session_start();
 
 include 'DatabaseConnection.php';
 if (isset($_SESSION['user'])) {
