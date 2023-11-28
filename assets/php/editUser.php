@@ -20,17 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = $pdo->prepare("UPDATE users SET email = ?, username = ? WHERE user_id = ?");
         $stmt->execute([$newEmail, $newUsername, $_SESSION['user']['user_id']]);
     }
-    // Check if a new username is provided
-    if (!empty($_POST["new_username"])) {
-        $stmt = $pdo->prepare("UPDATE users SET username = ? WHERE user_id = ?");
-        $stmt->execute([$_POST["new_username"], $_SESSION['user']['user_id']]);
-    }
 
-    // Check if a new email is provided
-    if (!empty($_POST["new_email"])) {
-        $stmt = $pdo->prepare("UPDATE users SET email = ? WHERE user_id = ?");
-        $stmt->execute([$_POST["new_email"], $_SESSION['user']['user_id']]);
-    }
     // Check if a new password is provided
     if (!empty($_POST["new_password"])) {
         $stmt = $pdo->prepare("UPDATE users SET password = ? WHERE user_id = ?");
@@ -41,9 +31,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($_FILES['new_profile_pic']['name'])) {
         // Handle file upload
         $targetDir = 'uploads/';
-        
+
+        // Check if the directory exists, create it if not
+        if (!file_exists($targetDir)) {
+            mkdir($targetDir, 0777, true);
+        }
+
         // Construct a unique filename
-        $filename = $uploadDir . basename($_FILES['new_profile_pic']['name'], $filename);
+        $filename = $targetDir . basename($_FILES['new_profile_pic']['name']);
 
         $uploadFile = $_FILES['new_profile_pic']['name'];
 
@@ -53,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute([$uploadFile, $_SESSION['user']['user_id']]);
         } else {
             // Handle file upload error
-            echo "File upload failed.";
+            echo "File upload failed. Check if the target directory exists and has proper permissions.";
             exit();
         }
     }

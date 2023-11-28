@@ -4,8 +4,8 @@ include 'DatabaseConnection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
-    $username = mysqli_real_escape_string($connection, $_POST["username"]); 
-    $password = mysqli_real_escape_string($connection, $_POST["password"]);
+    $username = $_POST["username"]; 
+    $password = $_POST["password"];
 
 
     // Retrieve user from the database based on the provided username
