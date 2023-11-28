@@ -8,7 +8,7 @@ if (isset($_SESSION['user'])) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_post'])) {
     // Retrieve form data
-    $postId = mysqli_real_escape_string($connection, $_POST["post_id"]);
+    $postId = $_POST["post_id"];
 
     // Delete the post from the database
     $stmt = $pdo->prepare("DELETE FROM posts WHERE post_id = ?");

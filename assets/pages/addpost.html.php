@@ -1,15 +1,20 @@
-<div class="modal fade" id="addpost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="container" id="addpost" >
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add New Post</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <img src="" style="display:none" id='post_image' class="w-100 rounded border">
-                <form method="post" action="assets/php/addpost.php" enctype="multipart/form-data">
-                    <select class="form-select rounded-0 border-0" name="module_id" aria-label="Select Module">
-                        <option selected>Select Module</option>
+                <form method="post" action="../php/addpost.php" enctype="multipart/form-data">
+                    <select class="form-select" name="module_id">
+
+                        <?php foreach ($modules as $module):?>
+                            <option value="<?php echo $module['module_id']; ?>">
+                                <?php echo $module['module_name']; ?>
+                                <?php echo $user['user_id']; ?>
+                            </option>
+                        <?php endforeach;?>
                     </select>
                     <div class="my-3">
                         <input class="form-control" type="file" accept=".jpg" name='post_image' id="select_post_img" onchange="displayImage(this)">

@@ -5,3 +5,4 @@ require_once 'DatabaseConnection.php';
 function showPage($page, $data=""){
     include("assets/pages/$page.html.php");
 }
+

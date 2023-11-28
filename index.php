@@ -11,6 +11,10 @@ if (!$pagecount) {
     showPage('header', ['page_title' => 'Home']);
     showPage('navbar');
     showPage('posts');
+} elseif (isset($_GET['addpost'])) {
+    showPage('header', ['page_title' => 'Add Post']);
+    showPage('navbar');
+    showPage('addpost');
 } elseif (isset($_GET['editProfile'])) {
     showPage('header', ['page_title' => 'Edit Profile']);
     showPage('navbar');
@@ -30,4 +34,3 @@ if (!$pagecount) {
     showPage('header', ['page_title' => 'Sign Up']);
     showPage('signup');
 }
-showPage('addpost');

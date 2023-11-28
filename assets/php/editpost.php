@@ -8,7 +8,7 @@ if (isset($_SESSION['user'])) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_post'])) {
     // Retrieve form data
-    $postId = mysqli_real_escape_string($connection, $_POST["post_id"]);
+    $postId = $_POST["post_id"];
     $newPostTitle = $_POST['new_post_title'];
 
     // Update the post title in the database
