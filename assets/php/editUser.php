@@ -14,12 +14,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $newEmail = $_POST["new_email"];
     $newUsername = $_POST["new_username"];
     $newPassword = password_hash($_POST["new_password"], PASSWORD_BCRYPT); // Hash the new password for security
+
     // Check if the email or username has changed before updating
     if ($newEmail != $_SESSION['user']['email'] || $newUsername != $_SESSION['user']['username']) {
         $stmt = $pdo->prepare("UPDATE users SET email = ?, username = ? WHERE user_id = ?");
         $stmt->execute([$newEmail, $newUsername, $_SESSION['user']['user_id']]);
     }
+    // Check if a new username is provided
+    if (!empty($_POST["new_username"])) {
+        $stmt = $pdo->prepare("UPDATE users SET username = ? WHERE user_id = ?");
+        $stmt->execute([$_POST["new_username"], $_SESSION['user']['user_id']]);
+    }
 
+    // Check if a new email is provided
+    if (!empty($_POST["new_email"])) {
+        $stmt = $pdo->prepare("UPDATE users SET email = ? WHERE user_id = ?");
+        $stmt->execute([$_POST["new_email"], $_SESSION['user']['user_id']]);
+    }
     // Check if a new password is provided
     if (!empty($_POST["new_password"])) {
         $stmt = $pdo->prepare("UPDATE users SET password = ? WHERE user_id = ?");
@@ -29,10 +40,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if a new profile_pic is provided
     if (!empty($_FILES['new_profile_pic']['name'])) {
         // Handle file upload
-        $uploadDir = 'path/to/upload/directory/';
-        $uploadFile = $uploadDir . basename($_FILES['new_profile_pic']['name']);
+        $targetDir = 'uploads/';
+        
+        // Construct a unique filename
+        $filename = $uploadDir . basename($_FILES['new_profile_pic']['name'], $filename);
 
-        if (move_uploaded_file($_FILES['new_profile_pic']['tmp_name'], $uploadFile)) {
+        $uploadFile = $_FILES['new_profile_pic']['name'];
+
+        if (move_uploaded_file($_FILES['new_profile_pic']['tmp_name'], $filename)) {
             // Update the profile_pic in the database
             $stmt = $pdo->prepare("UPDATE users SET profile_pic = ? WHERE user_id = ?");
             $stmt->execute([$uploadFile, $_SESSION['user']['user_id']]);

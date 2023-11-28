@@ -10,14 +10,13 @@ if (isset($_SESSION['user'])) {
     ORDER BY p.created_at DESC"); 
     $stmt->execute();
     $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
     foreach ($posts as $post) {
         echo '<div class="container col-9 rounded-0 mb-5">
                 <div class="col-8">
                     <div class="card mt-4">
                         <div class="card-title d-flex justify-content-between  align-items-center">
                             <div class="d-flex align-items-center p-2">
-                                <img src="assets/images/' . $post['profile_pic'] . '" alt="" height="60" class="rounded-circle border">
+                                <img src="assets/php/uploads/' . $post['profile_pic'] . '" alt="" height="60" class="rounded-circle border">
                                 <div>&nbsp;&nbsp;&nbsp;</div>
                                 <div class="d-flex flex-column justify-content-center align-items-center">
                                     <h6 style="margin: 0px;">' . $post['username'] . '</h6>

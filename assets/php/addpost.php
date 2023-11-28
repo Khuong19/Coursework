@@ -9,7 +9,7 @@ if (isset($_SESSION['user'])) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['postBtn'])) {
     // Retrieve form data
-    $postText = mysqli_real_escape_string($connection, $_POST["post_text"]);
+    $postText = $_POST["post_text"];
 
     // Check if a file is selected
     if (!empty($_FILES['post_image']['name'])) {
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['postBtn'])) {
 
             // Execute the statement with proper error handling
             try {
-                $stmt->execute([$user['id'], $postText, $uploadedPictureName]);
+                $stmt->execute([$user['user_id'], $postText, $uploadedPictureName]);
                 header("Location: ../../?posts");
                 exit();
             } catch (PDOException $e) {

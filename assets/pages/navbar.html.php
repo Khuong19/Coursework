@@ -1,6 +1,5 @@
 <?php
-var_dump($_POST); // Add this line for debugging
-// Check if the user is logged in
+
 if (isset($_SESSION['user'])) {
     // Access user data
     $user = $_SESSION['user'];
@@ -44,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="assets/images/<?=$user['profile_pic']?>" alt="" height="30" class="rounded-circle border">
+                    <img src="../php/uploads/<?=$user['profile_pic']?>" alt="" height="30" class="rounded-circle border">
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="?editProfile">Edit Profile</a></li>
