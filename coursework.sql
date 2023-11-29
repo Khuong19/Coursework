@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 26, 2023 at 03:34 PM
+-- Host: localhost
+-- Generation Time: Nov 29, 2023 at 07:10 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -43,7 +43,9 @@ INSERT INTO `comments` (`comment_id`, `user_id`, `post_id`, `comment_text`, `cre
 (1, NULL, 3, 'hi', '2023-11-22 04:29:19'),
 (2, 9, 3, 'hi', '2023-11-22 04:29:52'),
 (3, 9, 3, 'hello test', '2023-11-22 04:30:43'),
-(4, 10, 3, 'I love it', '2023-11-22 13:38:26');
+(4, 10, 3, 'I love it', '2023-11-22 13:38:26'),
+(6, 9, 3, 'nice', '2023-11-28 13:46:47'),
+(7, 9, 3, 'khuongnhathuy@gmail.com', '2023-11-28 13:57:12');
 
 -- --------------------------------------------------------
 
@@ -66,7 +68,7 @@ INSERT INTO `modules` (`module_id`, `module_name`, `user_id`) VALUES
 (5, 'COMP-1770', 9),
 (8, 'Software Engineer', 10),
 (9, 'Information Technology', 10),
-(10, 's', 10);
+(11, 'COMP-THIRD', 9);
 
 -- --------------------------------------------------------
 
@@ -89,7 +91,8 @@ CREATE TABLE `posts` (
 
 INSERT INTO `posts` (`post_id`, `user_id`, `post_text`, `post_img`, `module_id`, `created_at`) VALUES
 (2, 9, 'Happy Birthday', NULL, 0, '2023-11-16 13:44:06'),
-(3, 9, 'hi', 'profile.jpg', 0, '2023-11-16 14:21:13');
+(3, 9, 'hi', 'profile.jpg', 0, '2023-11-16 14:21:13'),
+(6, 9, 'hh', NULL, 2, '2023-11-29 05:59:14');
 
 -- --------------------------------------------------------
 
@@ -111,7 +114,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `profile_pic`) VALUES
 (9, 'admin', 'khuongnhathuy@gmail.com', '$2y$10$FyJpSO0S9duvyCzNeMKcFOyPdH3csIu2d.R0iigzSu.zb9gQ8aeRW', 'default_profile.jpg'),
-(10, 'admin2', 'admin2@gmail.com', '$2y$10$qHcIlxjO8zt5cv9DKQWXo.3gfXt1CSFBHhzIC1iNSKy/osq84RWEe', '\'default_profile.jpg\'');
+(10, 'admin2', 'admin2@gmail.com', '$2y$10$qHcIlxjO8zt5cv9DKQWXo.3gfXt1CSFBHhzIC1iNSKy/osq84RWEe', '\'default_profile.jpg\''),
+(11, '', '', '$2y$10$nLkVYcqQoQOhn/secYD0q.qRJ6XApPyGQsmPmE3VK0nfHzroobxse', '\\\'default_profile.jpg\\\'');
 
 --
 -- Indexes for dumped tables
@@ -153,25 +157,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `modules`
 --
 ALTER TABLE `modules`
-  MODIFY `module_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `module_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
