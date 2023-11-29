@@ -31,10 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 
         <ul class="navbar-nav mb-2 mb-lg-0">
             <li class="nav-item">
-                <a class="nav-link text-dark" href="?posts"><i class="bi bi-house-door-fill"></i></a>
+                <a class="nav-link text-dark" href="?"><i class="bi bi-house-door-fill"></i></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark"  href="?addpost"><i class="bi bi-plus-square-fill"></i></a>
+                <a class="nav-link text-dark" href="?addpost"><i class="bi bi-plus-square-fill"></i></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-dark" href="?sendmail"><i class="bi bi-envelope-arrow-up-fill"></i></a>
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="?editProfile">Edit Profile</a></li>
                     <li><a class="dropdown-item" href="?editmodule">Edit Module</a></li>
-                    <li><a class="dropdown-item" href="?">Main Page</a></li>
+                    <li><a class="dropdown-item" href="?posts">Welcomed Page</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li class="nav-item">
                         <!-- Use a form to submit the logout request -->
