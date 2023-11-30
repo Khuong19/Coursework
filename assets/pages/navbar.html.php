@@ -5,7 +5,7 @@ if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
 } else {
     // Redirect to the login page if the user is not logged in
-    header("Location: ../../?login");
+    header("Location: http://localhost/coursework/?login");
     exit();
 }
 
@@ -14,7 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 
     // Unset the user session variable
     session_destroy();
-    
+    header("Location: http://localhost/coursework/?login");
+    exit();
 }
 ?>
 
@@ -53,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
                         <!-- Use a form to submit the logout request -->
                         <form method='post'>
                             <button type="submit" name="logout" class="btn nav-link text-dark">
-                                <a href="?login">Log out</a>
+                                Log out
                             </button>
                         </form>
                     </li>

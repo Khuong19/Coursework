@@ -11,6 +11,10 @@ if (!$pagecount) {
     showPage('header', ['page_title' => 'Home']);
     showPage('navbar');
     showPage('posts');
+} elseif (isset($_GET['admin'])) {
+    showPage('header', ['page_title' => 'Admin Dashboard']);
+    showPage('navbar');
+    showPage('admin');
 } elseif (isset($_GET['addpost'])) {
     showPage('header', ['page_title' => 'Add Post']);
     showPage('navbar');

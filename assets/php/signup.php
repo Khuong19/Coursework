@@ -10,6 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $email = $_POST["email"];
     $password = password_hash($_POST["password"], PASSWORD_BCRYPT); // Hash the password for security
+    $adminStatus = isset($_POST["admin_status"]) ? $_POST["admin_status"] : 0; // Default to 0 (user) if not set
+
 
     // Check if the username or email already exists in the database
     $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
@@ -24,8 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Insert user into the database
-    $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
-    $stmt->execute([$username, $email, $password]);
+    $stmt = $pdo->prepare("INSERT INTO users (username, email, password, admin_status) VALUES (?, ?, ?, ?)");
+    $stmt->execute([$username, $email, $password, $adminStatus]);
 
     // Redirect to a success page or login page
     header("Location: ../../?login");

@@ -5,7 +5,7 @@ if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
 } else {
     // Redirect to the login page if the user is not logged in
-    header("Location: ../../?login");
+    header("Location: http://localhost/coursework/?login");
     exit();
 }
 ?>

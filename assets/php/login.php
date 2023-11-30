@@ -18,7 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Login successful
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user'] = $user;
-        header("Location: ../../?posts"); 
+        if ($user['admin_status']) {
+            // Redirect to the admin dashboard
+            header("Location: ../../?admin_dashboard");
+        } else {
+            // Redirect to the normal posts page
+            header("Location: ../../?posts");
+        }
         exit();
     } else {
         // Login failed

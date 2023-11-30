@@ -29,6 +29,20 @@
                         <label for="floatingUName">Password</label>
                     </div>
 
+                    <div class="form-check mb-1">
+                        <input class="form-check-input" type="radio" name="admin_status" id="adminRadio" value="1">
+                        <label class="form-check-label" for="adminRadio">
+                            Register as Admin
+                        </label>
+                    </div>
+
+                    <div class="form-check mb-1">
+                        <input class="form-check-input" type="radio" name="admin_status" id="userRadio" value="0" checked>
+                        <label class="form-check-label" for="userRadio">
+                            Register as User
+                        </label>
+                    </div>
+
                     <div class="form-floating mb-1"><a class="" href="?login">Already has a account?</a></div>
                     <button type="submit" class="sub-btn w-100" value="add">Sign Up</button>
                 </form>
