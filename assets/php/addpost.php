@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 include 'DatabaseConnection.php';
 
@@ -56,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['postBtn'])) {
 
                     // Execute the statement with proper error handling
                     try {
-                        $stmt->execute([$user['id'], $postText, $uploadedPictureName, $moduleId]);
+                        $stmt->execute([$user['user_id'], $postText, $uploadedPictureName, $moduleId]);
                         header("Location: ../../?posts");
                         exit();
                     } catch (PDOException $e) {
@@ -77,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['postBtn'])) {
 
         // Execute the statement with proper error handling
         try {
-            $stmt->execute([$user['id'], $postText, $moduleId]);
+            $stmt->execute([$user['user_id'], $postText, $moduleId]);
             header("Location: ../../?posts");
             exit();
         } catch (PDOException $e) {
