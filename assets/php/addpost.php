@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['postBtn'])) {
 
                     // Execute the statement with proper error handling
                     try {
-                        $stmt->execute([$user['id'], $postText, $uploadedPictureName, $moduleId]);
+                        $stmt->execute([$user['user_id'], $postText, $uploadedPictureName, $moduleId]);
                         header("Location: ../../?posts");
                         exit();
                     } catch (PDOException $e) {
