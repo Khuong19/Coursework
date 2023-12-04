@@ -29,34 +29,45 @@ if (isset($_SESSION['user'])) {
                 <textarea class='form-control' placeholder="Message" id="message" name="message" rows="4" required></textarea>
             </div>
 
-            <button class="btn btn-primary" type="submit">Send Message</button>
+            <button class="btn btn-primary" name="send" type="submit">Send Message</button>
         </form>
         
     </div>
 </div>
 
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $adminEmail = "khuong.huy.careers@gmail.com"; 
-    $userEmail = "khuongnhathuy@gmail.com";
-    $name = $_POST["name"];
-    $subject = $_POST["subject"];
-    $message = $_POST["message"];
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+    require 'PHPMailer/src/Exception.php';
+    require 'PHPMailer/src/PHPMailer.php';
+    require 'PHPMailer/src/SMTP.php';
+    $mail = new PHPMailer();
+    if(isset($_POST['send'])) {
+        try {
+        //Sender
+        $mail->SMTPDebug = 2;
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'khuong.huy.careers@gmail.com';
+        $mail->Password = 'spcq rvnl vnje hxvz';
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+        //Recipient
+        $mail->addAddress('khuong.huy.careers@gmail.com');
 
-    // Compose the email message
-    $emailMessage = "Name: $name\n";
-    $emailMessage .= "Email: $userEmail\n";
-    $emailMessage .= "Subject: $subject\n\n";
-    $emailMessage .= "Message:\n$message";
-
-    // Send the email
-    $success = mail($adminEmail, "Contact Form Submission", $emailMessage);
-
-    if ($success) {
-        echo "Message sent successfully!";
-    } else {
-        echo "Failed to send the message. Please try again later.";
+        //Content
+        $mail->isHTML(true);
+        $mail->Subject = 'Test';
+        $mail->Body = '<b>This is the message</b>';
+        //Send mail
+        if ($mail->send()) {
+            echo 'Message has been sent';
+        } else {
+            echo 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo;
+        }
+    } catch (Exception $e) {
+        echo 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo;
+        }
     }
-}
 ?>
-

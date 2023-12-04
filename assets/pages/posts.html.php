@@ -19,7 +19,7 @@ if (isset($_SESSION['user']) || !$_SESSION['user']['is_admin']) {
                                 <img src="assets/php/uploads/' . $post['profile_pic'] . '" alt="" height="60" class="rounded-circle border">
                                 <div>&nbsp;&nbsp;&nbsp;</div>
                                 <div class="d-flex flex-column justify-content-start">
-                                    <h1 style="margin: 0px;">' . $post['post_title'] . '</h1>
+                                    <h2 style="margin: 0px;">' . $post['post_title'] . '</h2>
                                     <p style="margin:0px;" class="text-muted">Posted by @' . $post['username'] . '</p>
                                     <p style="margin:0px;" class="text-muted">Module Name:' . $post['module_name'] . '</p>
                                 </div>
@@ -74,8 +74,8 @@ if (isset($_SESSION['user']) || !$_SESSION['user']['is_admin']) {
                             </div>
                         </div>
 
-                        <div class="text-center">
-                            <div class="card-body mt-4"
+                        <div class="text-right">
+                            <div class="card-body mt-2"
                                 <p>' . $post['post_content'] . '</p>
                             </div>
                             <img class="img-fluid" src="assets/php/uploads/'.$post['post_img'].'"  alt="'.$post['post_img'].'">

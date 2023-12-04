@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['postBtn'])) {
                     $uploadedPictureName = $_FILES['post_image']['name'];
 
                     // Update the database with the file name and post text
-                    $stmt = $pdo->prepare("INSERT INTO posts (user_id, post_title, post_content, post_img, module_id, created_at) VALUES (?, ?, ?, ?, NOW())");
+                    $stmt = $pdo->prepare("INSERT INTO posts (user_id, post_title, post_content, post_img, module_id, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
 
                     // Execute the statement with proper error handling
                     try {

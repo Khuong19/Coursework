@@ -16,6 +16,7 @@ if (isset($_SESSION['user'])) {
             <h1 class="h5 text-center mb-3 fw-normal">Edit Profile</h1>
             <div class="form-floating mt-1">
                 <img src="assets/php/uploads/<?=$user['profile_pic']?>" class="img-thumbnail my-3" style="height:150px;" alt="...">
+                <?=$user['profile_pic']?>
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Change Profile Picture</label>
                     <input class="form-control" type="file" id="formFile" name="new_profile_pic">
