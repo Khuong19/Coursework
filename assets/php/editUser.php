@@ -16,9 +16,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $newPassword = password_hash($_POST["new_password"], PASSWORD_BCRYPT); // Hash the new password for security
 
     // Check if the email or username has changed before updating
-    if ($newEmail != $_SESSION['user']['email'] || $newUsername != $_SESSION['user']['username']) {
-        $stmt = $pdo->prepare("UPDATE users SET email = ?, username = ? WHERE user_id = ?");
-        $stmt->execute([$newEmail, $newUsername, $_SESSION['user']['user_id']]);
+    if (($newEmail != $_SESSION['user']['email'] && (!empty($_POST["new_email"])))) {
+        $stmt = $pdo->prepare("UPDATE users SET email = ? WHERE user_id = ?");
+        $stmt->execute([$newEmail, $_SESSION['user']['user_id']]);
+    }
+
+    if (($newUsername != $_SESSION['user']['username']) && (!empty($_POST["new_username"]))) {
+        $stmt = $pdo->prepare("UPDATE users SET username = ? WHERE user_id = ?");
+        $stmt->execute([$newUsername, $_SESSION['user']['user_id']]);
     }
 
     // Check if a new password is provided
@@ -58,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['user']['username'] = $newUsername;
 
     // Redirect to a success page or the profile page
-    header("Location: ../../?posts");
+    header("Location: ../../?editProfile");
     exit();
 }
 ?>

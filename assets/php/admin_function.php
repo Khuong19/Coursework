@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     $userId = $_GET['id'];
 
     // Retrieve user information for editing
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE user_id = ?");
     $stmt->execute([$userId]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
         $newEmail = $_POST['new_email'];
 
         // Update the user information
-        $updateStmt = $pdo->prepare("UPDATE users SET username = ?, email = ? WHERE id = ?");
+        $updateStmt = $pdo->prepare("UPDATE users SET username = ?, email = ? WHERE user_id = ?");
         $updateStmt->execute([$newUsername, $newEmail, $userId]);
 
         // Redirect back to the admin dashboard after editing
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
         // Handle the delete form submission
-        $deleteStmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
+        $deleteStmt = $pdo->prepare("DELETE FROM users WHERE user_id = ?");
         $deleteStmt->execute([$userId]);
 
         // Redirect back to the admin dashboard after deleting
@@ -44,4 +44,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     exit();
 }
 ?>
-

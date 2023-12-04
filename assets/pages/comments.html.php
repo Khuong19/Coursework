@@ -15,9 +15,10 @@
     foreach ($comments as $comment) {
         $isCommentOwner = $comment['user_id'] == $user['user_id'];
 
-        echo '<div class="comment ps-5 pe-5 d-flex align-items-center">
+        echo '<div class="comment pb-2 ps-5 pe-5 d-flex align-items-center">
                 <strong class="pe-2">' . $comment['username'] . ': </strong>
-                <div>' . $comment['comment_text'] . '</div>';
+                <div>' . $comment['comment_text'] . '</div>
+                ';
 
         // Display delete button only for the comment's owner
         if ($isCommentOwner) {

@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $email = $_POST["email"];
     $password = password_hash($_POST["password"], PASSWORD_BCRYPT); // Hash the password for security
-    $adminStatus = isset($_POST["admin_status"]) ? $_POST["admin_status"] : 0; // Default to 0 (user) if not set
+    $adminStatus = isset($_POST["is_admin"]) ? $_POST["is_admin"] : 0; // Default to 0 (user) if not set
 
 
     // Check if the username or email already exists in the database
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Insert user into the database
-    $stmt = $pdo->prepare("INSERT INTO users (username, email, password, admin_status) VALUES (?, ?, ?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO users (username, email, password,profile_pic, is_admin) VALUES (?, ?, ?,'default_profile.jpg', ?)");
     $stmt->execute([$username, $email, $password, $adminStatus]);
 
     // Redirect to a success page or login page

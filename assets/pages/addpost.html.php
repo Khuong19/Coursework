@@ -39,8 +39,12 @@ try {
             <input class="form-control" type="file" accept=".jpg" name='post_image' id="select_post_img" onchange="displayImage(this)">
         </div>
         <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Say Something</label>
-            <textarea class="form-control" name='post_text' id="exampleFormControlTextarea1" rows="3"></textarea>
+            <label for="exampleFormControlTextarea1" class="form-label">Title</label>
+            <textarea class="form-control" name='post_title' id="exampleFormControlTextarea1" rows="1"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Question</label>
+            <textarea class="form-control" name='post_content' id="exampleFormControlTextarea1" rows="3"></textarea>
         </div>
         <button type="submit" class="btn btn-primary" name='postBtn'>Post</button>
     </form>

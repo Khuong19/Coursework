@@ -29,9 +29,9 @@ if (isset($_SESSION['user'])) {
                     <div class="card-body">
                         <h5 class="card-title">' . $module['module_name'] . '</h5>
                         <p class="card-text">Module ID: ' . $module['module_id'] . '</p>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModuleModal' . $module['module_id'] . '">Edit Module</button>
+                        <button class="btn btn-primary d-inline-block" data-bs-toggle="modal" data-bs-target="#editModuleModal' . $module['module_id'] . '">Edit Module</button>
                         
-                        <form method="post">
+                        <form class="d-inline-block" method="post">
                             <input type="hidden" name="delete_module_id" value="' . $module['module_id'] . '">
                             <button class="btn btn-danger" type="submit" name="delete_module">Delete Module</button>
                         </form>

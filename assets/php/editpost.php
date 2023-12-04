@@ -10,9 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_post'])) {
     // Retrieve form data
     $postId = $_POST["post_id"];
     $newPostTitle = $_POST['new_post_title'];
+    $moduleId = $_POST['module_id'];
+    $newModuleName = $_POST['new_module_name'];
 
     // Update the post title in the database
-    $stmt = $pdo->prepare("UPDATE posts SET post_text = ? WHERE post_id = ?");
+    $stmt = $pdo->prepare("UPDATE posts SET post_text = ?, module_id = ? WHERE post_id = ?");
     
     // Execute the statement with proper error handling
     try {

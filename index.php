@@ -7,14 +7,14 @@ $pagecount = count($_GET);
 // Check if no specific page is requested, then show the homepage
 if (!$pagecount) {
     showPage('homepage');
+} elseif (isset($_GET['dashboard'])) {
+    showPage('header', ['page_title' => 'Admin Dashboard']);
+    showPage('navbar');
+    showPage('adminDashboard');
 } elseif (isset($_GET['posts'])) {
     showPage('header', ['page_title' => 'Home']);
     showPage('navbar');
     showPage('posts');
-} elseif (isset($_GET['admin'])) {
-    showPage('header', ['page_title' => 'Admin Dashboard']);
-    showPage('navbar');
-    showPage('admin');
 } elseif (isset($_GET['addpost'])) {
     showPage('header', ['page_title' => 'Add Post']);
     showPage('navbar');

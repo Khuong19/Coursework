@@ -18,9 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Login successful
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user'] = $user;
-        if ($user['admin_status']) {
+        if ($user['is_admin']) {
             // Redirect to the admin dashboard
-            header("Location: ../../?admin_dashboard");
+            header("Location: ../../?dashboard");
         } else {
             // Redirect to the normal posts page
             header("Location: ../../?posts");

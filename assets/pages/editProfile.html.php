@@ -22,17 +22,17 @@ if (isset($_SESSION['user'])) {
                 </div>
             </div>
             
-            <div class="form-floating mt-1">
-                <input type="email" class="form-control rounded-0" name="new_email" placeholder="<?=$user['email']?>">
-                <label for="floatingInput">Email</label>
+            <div class="input-group mt-2">
+                <span class="input-group-text">Email</span>
+                <input type="email" class="form-control rounded-0" name="new_email" value="<?=$user['email']?>">
             </div>
-            <div class="form-floating mt-1">
-                <input type="text" class="form-control rounded-0" name="new_username" placeholder="<?=$user['username']?>">
-                <label for="floatingInput">Username</label>
+            <div class="input-group mt-2">
+                <span class="input-group-text">Username</span>
+                <input type="text" class="form-control rounded-0" name="new_username" value="<?=$user['username']?>">
             </div>
-            <div class="form-floating mt-1">
+            <div class="input-group mt-2">
+                <span class="input-group-text">Password</span>
                 <input type="password" class="form-control rounded-0" name="new_password" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword">Password</label>
             </div>
 
             <div class="mt-3 d-flex justify-content-center align-items-center">

@@ -2,7 +2,7 @@
 include 'assets/php/DatabaseConnection.php';
 
 // Check if the user is logged in
-if (isset($_SESSION['user'])) {
+if (isset($_SESSION['user']) || !$_SESSION['user']['is_admin']) {
     // Access user data
     $stmt = $pdo->prepare("SELECT p.*, m.module_name, u.username, u.profile_pic FROM posts p
     LEFT JOIN modules m ON p.module_id = m.module_id
@@ -14,13 +14,14 @@ if (isset($_SESSION['user'])) {
         echo '<div class="container col-9 rounded-0 mb-5">
                 <div class="col-8">
                     <div class="card mt-4">
-                        <div class="card-title d-flex justify-content-between  align-items-center">
+                        <div class="card-title d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center p-2">
                                 <img src="assets/php/uploads/' . $post['profile_pic'] . '" alt="" height="60" class="rounded-circle border">
                                 <div>&nbsp;&nbsp;&nbsp;</div>
-                                <div class="d-flex flex-column justify-content-center align-items-center">
-                                    <h6 style="margin: 0px;">' . $post['username'] . '</h6>
-                                    <p style="margin:0px;" class="text-muted">@' . $post['username'] . '</p>
+                                <div class="d-flex flex-column justify-content-start">
+                                    <h1 style="margin: 0px;">' . $post['post_title'] . '</h1>
+                                    <p style="margin:0px;" class="text-muted">Posted by @' . $post['username'] . '</p>
+                                    <p style="margin:0px;" class="text-muted">Module Name:' . $post['module_name'] . '</p>
                                 </div>
                             </div>
                             <div class="p-2">
@@ -38,35 +39,48 @@ if (isset($_SESSION['user'])) {
                                     </li>
                                 </ul>
                             </div>
-                            <div class="modal fade" id="editPostModal'.$post['post_id'].'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Edit Post</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form method="post" action="assets/php/editpost.php">
-                                                <input type="hidden" name="post_id" value="'.$post['post_id'].'">
-                                                <div class="mb-3">
-                                                    <label for="new_post_title" class="form-label">New Post Title</label>
-                                                    <input type="text" class="form-control" id="new_post_title" name="new_post_title" value="'.$post['post_text'].'">
-                                                </div>
-                                                <button type="submit" class="btn btn-primary" name="edit_post">Save Changes</button>
-                                            </form>
-                                        </div>
+                        </div>
+
+                        <div class="modal fade" id="editPostModal'.$post['post_id'].'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Edit Post</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="post" action="assets/php/editpost.php">
+                                            <input type="hidden" name="post_id" value="'.$post['post_id'].'">
+                                            <div class="mb-3">
+                                                <label for="new_post_title" class="form-label">New Post Title</label>
+                                                <input type="text" class="form-control" id="new_post_title" name="new_post_title" value="'.$post['post_title'].'">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="new_module" class="form-label">Select Module</label>
+                                                <select class="form-select" name="module_id">
+                                                    ';
+                                                // Fetch modules and generate options
+                                                $modules = $pdo->query("SELECT * FROM modules")->fetchAll(PDO::FETCH_ASSOC);
+                                                foreach ($modules as $module) {
+                                                    echo '<option value="' . $module['module_id'] . '">' . $module['module_name'] . '</option>';
+                                                }
+
+                                                echo '</select>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary" name="edit_post">Save Changes</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="text-center">
-                            <img src="assets/php/uploads/'.$post['post_img'].'"  alt="'.$post['post_img'].'">
-                            <div class="card-body">
-                                <p>' . $post['post_text'] . '</p>
-                                <h5>' . $post['module_name'] . '</h5>
+                            <div class="card-body mt-4"
+                                <p>' . $post['post_content'] . '</p>
                             </div>
-                        </div>
-                        ';
+                            <img class="img-fluid" src="assets/php/uploads/'.$post['post_img'].'"  alt="'.$post['post_img'].'">
+                        </div>';
+
         // Include comments section from comments.html.php
         include 'assets/pages/comments.html.php';
         echo '</div>
