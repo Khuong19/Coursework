@@ -47,13 +47,11 @@ body{
     border: none;
 }
 
-.hover-nav-item{
+.hover-nav-item:hover{
     cursor: pointer;
     transition: all .1s ease;
     opacity: 50%;
-    background-color: #e53935;
     font-weight: 600;
-    border: none;
 }
 
 .logo-coursework{
