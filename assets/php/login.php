@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['user'] = $user;
         if ($user['is_admin']) {
             // Redirect to the admin dashboard
-            header("Location: ../../?dashboard");
+            header("Location: http://localhost/coursework/?dashboard");
         } else {
             // Redirect to the normal posts page
             header("Location: ../../?posts");

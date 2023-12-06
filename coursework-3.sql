@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 29, 2023 at 07:10 AM
+-- Generation Time: Dec 06, 2023 at 08:41 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -35,18 +35,6 @@ CREATE TABLE `comments` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `comments`
---
-
-INSERT INTO `comments` (`comment_id`, `user_id`, `post_id`, `comment_text`, `created_at`) VALUES
-(1, NULL, 3, 'hi', '2023-11-22 04:29:19'),
-(2, 9, 3, 'hi', '2023-11-22 04:29:52'),
-(3, 9, 3, 'hello test', '2023-11-22 04:30:43'),
-(4, 10, 3, 'I love it', '2023-11-22 13:38:26'),
-(6, 9, 3, 'nice', '2023-11-28 13:46:47'),
-(7, 9, 3, 'khuongnhathuy@gmail.com', '2023-11-28 13:57:12');
-
 -- --------------------------------------------------------
 
 --
@@ -64,11 +52,7 @@ CREATE TABLE `modules` (
 --
 
 INSERT INTO `modules` (`module_id`, `module_name`, `user_id`) VALUES
-(2, 'COMP-141', 9),
-(5, 'COMP-1770', 9),
-(8, 'Software Engineer', 10),
-(9, 'Information Technology', 10),
-(11, 'COMP-THIRD', 9);
+(13, 'COMP-1770', 14);
 
 -- --------------------------------------------------------
 
@@ -79,7 +63,8 @@ INSERT INTO `modules` (`module_id`, `module_name`, `user_id`) VALUES
 CREATE TABLE `posts` (
   `post_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `post_text` text NOT NULL,
+  `post_title` text NOT NULL,
+  `post_content` varchar(255) NOT NULL,
   `post_img` varchar(255) DEFAULT NULL,
   `module_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
@@ -89,10 +74,8 @@ CREATE TABLE `posts` (
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`post_id`, `user_id`, `post_text`, `post_img`, `module_id`, `created_at`) VALUES
-(2, 9, 'Happy Birthday', NULL, 0, '2023-11-16 13:44:06'),
-(3, 9, 'hi', 'profile.jpg', 0, '2023-11-16 14:21:13'),
-(6, 9, 'hh', NULL, 2, '2023-11-29 05:59:14');
+INSERT INTO `posts` (`post_id`, `user_id`, `post_title`, `post_content`, `post_img`, `module_id`, `created_at`) VALUES
+(10, 14, 'AI QUESTION', 'How can I Draw This Picture with Mid Journey?', 'aleksandr-popov-3InMDrsuYrk-unsplash.jpg', 2, '2023-12-04 11:11:23');
 
 -- --------------------------------------------------------
 
@@ -105,17 +88,17 @@ CREATE TABLE `users` (
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` text NOT NULL,
-  `profile_pic` text NOT NULL DEFAULT '\\\'default_profile.jpg\\\''
+  `profile_pic` text NOT NULL,
+  `is_admin` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `profile_pic`) VALUES
-(9, 'admin', 'khuongnhathuy@gmail.com', '$2y$10$FyJpSO0S9duvyCzNeMKcFOyPdH3csIu2d.R0iigzSu.zb9gQ8aeRW', 'default_profile.jpg'),
-(10, 'admin2', 'admin2@gmail.com', '$2y$10$qHcIlxjO8zt5cv9DKQWXo.3gfXt1CSFBHhzIC1iNSKy/osq84RWEe', '\'default_profile.jpg\''),
-(11, '', '', '$2y$10$nLkVYcqQoQOhn/secYD0q.qRJ6XApPyGQsmPmE3VK0nfHzroobxse', '\\\'default_profile.jpg\\\'');
+INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `profile_pic`, `is_admin`) VALUES
+(14, 'khuongnhathuy', 'khuongnhathuy@gmail.com', '$2y$10$ml229jdXpBNmkCFkRzIpduAYEOw2YjOIPgXwDRLfQmuaX0rYJG0bW', 'z4737219011206_b1185b60b322f0e5b6c743d2336d2b02.jpg', 0),
+(15, 'admin', 'admin@gmail.com', '$2y$10$XG9LLXutL9ZtdCesRQEfVOyv48dwkTgsY1YCl8ozHrYrwsG.9cP9q', 'default_profile.jpg', 1);
 
 --
 -- Indexes for dumped tables
@@ -157,25 +140,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `modules`
 --
 ALTER TABLE `modules`
-  MODIFY `module_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `module_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
@@ -192,13 +175,13 @@ ALTER TABLE `comments`
 -- Constraints for table `modules`
 --
 ALTER TABLE `modules`
-  ADD CONSTRAINT `modules_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `modules_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `posts`
 --
 ALTER TABLE `posts`
-  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

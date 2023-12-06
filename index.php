@@ -9,7 +9,7 @@ if (!$pagecount) {
     showPage('homepage');
 } elseif (isset($_GET['dashboard'])) {
     showPage('header', ['page_title' => 'Admin Dashboard']);
-    showPage('navbar');
+    showPage('navbaradmin');
     showPage('adminDashboard');
 } elseif (isset($_GET['posts'])) {
     showPage('header', ['page_title' => 'Home']);

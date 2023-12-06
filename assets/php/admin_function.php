@@ -1,46 +1,73 @@
 <?php
 include 'DatabaseConnection.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
-    $userId = $_GET['id'];
+// Check if the user is logged in
+if (!isset($_SESSION['user']) || !$_SESSION['user']['is_admin']) {
+    header("Location: http://localhost/coursework/?login");
+    exit();
+} else {
+    $user = $_SESSION['user'];
+}
 
-    // Retrieve user information for editing
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE user_id = ?");
-    $stmt->execute([$userId]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+// Check if the user_id is set in the POST request
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
+    $userId = $_POST['user_id'];
 
-    if (!$user) {
-        // Redirect if the user does not exist
-        header("Location: ../../?admin");
-        exit();
-    }
+    try {
+        // Retrieve user information for editing
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE user_id = ?");
+        $stmt->execute([$userId]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit'])) {
-        // Handle the edit form submission
-        $newUsername = $_POST['new_username'];
-        $newEmail = $_POST['new_email'];
-
-        // Update the user information
-        $updateStmt = $pdo->prepare("UPDATE users SET username = ?, email = ? WHERE user_id = ?");
-        $updateStmt->execute([$newUsername, $newEmail, $userId]);
-
-        // Redirect back to the admin dashboard after editing
-        header("Location: ../../?admin");
-        exit();
-    }
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
-        // Handle the delete form submission
+        // Delete user
         $deleteStmt = $pdo->prepare("DELETE FROM users WHERE user_id = ?");
         $deleteStmt->execute([$userId]);
 
-        // Redirect back to the admin dashboard after deleting
-        header("Location: ../../?admin");
+        header("Location: http://localhost/coursework/?dashboard");
         exit();
+    } catch (PDOException $e) {
+        echo 'Error executing the query: ' . $e->getMessage();
     }
 } else {
-    // Redirect for invalid or missing user ID
-    header("Location: ../../?admin");
-    exit();
+    echo 'User ID not provided or invalid request method';
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    if (isset($_POST['delete_module'])) {
+        // Handle module deletion
+        $deleteModuleId = $_POST['delete_module_id'];
+
+        try {
+            // Delete the module from the database
+            $deleteStmt = $pdo->prepare("DELETE FROM modules WHERE module_id = ?");
+            $deleteStmt->execute([$deleteModuleId]);
+
+            echo json_encode(['success' => true, 'message' => 'Module deleted successfully']);
+            exit();
+        } catch (PDOException $e) {
+            echo json_encode(['success' => false, 'message' => 'Error deleting module: ' . $e->getMessage()]);
+            exit();
+        }
+    }
+
+    if (isset($_POST['change_admin'])) {
+        $userId = $_POST['user_id'];
+        $isAdmin = $_POST['is_admin'];
+    
+        try {
+            // Update the admin status in the database
+            $updateStmt = $pdo->prepare("UPDATE users SET is_admin = ? WHERE user_id = ?");
+            $updateStmt->execute([$isAdmin, $userId]);
+    
+            // Redirect back to the dashboard or refresh the page
+            header("Location: http://localhost/coursework/?dashboard");
+            exit();
+        } catch (PDOException $e) {
+            echo 'Error updating admin status: ' . $e->getMessage();
+        }
+    }
 }
 ?>

@@ -11,8 +11,10 @@ if (isset($_SESSION['user']) || !$_SESSION['user']['is_admin']) {
     $stmt->execute();
     $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     foreach ($posts as $post) {
-        echo '<div class="container col-9 rounded-0 mb-5">
-                <div class="col-8">
+        $isPostCreator = $_SESSION['user']['user_id'] === $post['user_id'];
+
+        echo '<div class="container col-7 rounded-0 mb-5">
+                <div class="col-12">
                     <div class="card mt-4">
                         <div class="card-title d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center p-2">
@@ -23,8 +25,9 @@ if (isset($_SESSION['user']) || !$_SESSION['user']['is_admin']) {
                                     <p style="margin:0px;" class="text-muted">Posted by @' . $post['username'] . '</p>
                                     <p style="margin:0px;" class="text-muted">Module Name:' . $post['module_name'] . '</p>
                                 </div>
-                            </div>
-                            <div class="p-2">
+                            </div>';
+                            if ($isPostCreator){
+                                echo '<div class="p-2">
                                 <i class="bi bi-three-dots-vertical dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                 <ul class="dropdown-menu">
                                     <li>
@@ -38,8 +41,10 @@ if (isset($_SESSION['user']) || !$_SESSION['user']['is_admin']) {
                                         </form>
                                     </li>
                                 </ul>
-                            </div>
-                        </div>
+                            </div>';
+                            }
+                            
+        echo '</div>
 
                         <div class="modal fade" id="editPostModal'.$post['post_id'].'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
@@ -54,6 +59,10 @@ if (isset($_SESSION['user']) || !$_SESSION['user']['is_admin']) {
                                             <div class="mb-3">
                                                 <label for="new_post_title" class="form-label">New Post Title</label>
                                                 <input type="text" class="form-control" id="new_post_title" name="new_post_title" value="'.$post['post_title'].'">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="new_post_content" class="form-label">New Post Content</label>
+                                                <input type="text" class="form-control" id="new_post_content" name="new_post_content" value="'.$post['post_content'].'">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="new_module" class="form-label">Select Module</label>
@@ -74,8 +83,8 @@ if (isset($_SESSION['user']) || !$_SESSION['user']['is_admin']) {
                             </div>
                         </div>
 
-                        <div class="text-right">
-                            <div class="card-body mt-2"
+                        <div class="">
+                            <div class="card-body">
                                 <p>' . $post['post_content'] . '</p>
                             </div>
                             <img class="img-fluid" src="assets/php/uploads/'.$post['post_img'].'"  alt="'.$post['post_img'].'">

@@ -1,5 +1,5 @@
 <?php
-session_start();
+include 'assets/php/DatabaseConnection.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -7,9 +7,6 @@ if (!isset($_SESSION['user']) || !$_SESSION['user']['is_admin']) {
     header("Location: http://localhost/coursework/?login");
     exit();
 }
-
-include 'assets/php/DatabaseConnection.php';
-include 'assets/php/admin_function.php';
 
 // Fetch data for the dashboard
 $modules = $pdo->query("SELECT * FROM modules")->fetchAll(PDO::FETCH_ASSOC);
@@ -19,19 +16,18 @@ LEFT JOIN posts ON users.user_id = posts.user_id
 LEFT JOIN modules ON users.user_id = modules.user_id
 GROUP BY users.user_id")->fetchAll(PDO::FETCH_ASSOC);
 
-?>
-    <h1>Welcome, Admin!</h1>
 
-    <h2 class="mt-4">Users</h2>
-    <table class="table table-bordered table-hover">
+?>
+    <table class=" table table-bordered table-hover">
         <thead class="thead-light">
             <tr>
                 <th>ID</th>
                 <th>Username</th>
                 <th>Email</th>
-                <th>Module Number</th>
-                <th>Post Number</th>
-                <th>Actions</th>
+                <th>Modules</th>
+                <th>Posts</th>
+                <th>Admin Status</th>
+                <th>Delete User</th>
             </tr>
         </thead>
         <tbody>
@@ -51,12 +47,20 @@ GROUP BY users.user_id")->fetchAll(PDO::FETCH_ASSOC);
                     </a>
                 </td>
                 <td>
-                    <form method="post">
-                        <input type="hidden" name="Edit" value="' . $module['module_id'] . '">
-                        <button type="submit" name="Edit">Edit</button>
+                    <form method="post" action="assets/php/admin_function.php" class="d-flex justify-content-evenly">
+                        <input type="hidden" name="user_id" value="<?= $user['user_id'] ?>">
+                        <select name="is_admin" class="form-select w-50 d-inline-block">
+                            <option value="0" <?= $user['is_admin'] == 0 ? 'selected' : '' ?>>User</option>
+                            <option value="1" <?= $user['is_admin'] == 1 ? 'selected' : '' ?>>Admin</option>
+                        </select>
+                        <button class="btn btn-primary" type="submit" name="change_admin">Change</button>
                     </form>
-                    
-                    <a href="delete_user.php?id=<?= $user['user_id'] ?>">Delete</a>
+                </td>
+                <td>
+                    <form method="post" action="assets/php/admin_function.php">
+                        <input type="hidden" name="user_id" value="<?= $user['user_id'] ?>">
+                        <button class="btn btn-danger" type="submit" name="delete">Delete</button>
+                    </form>
                 </td>
             </tr>
 
@@ -70,21 +74,24 @@ GROUP BY users.user_id")->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                         <div class="modal-body">
                             <?php
-                                // Fetch user's modules
-                                $userModules = $pdo->prepare("SELECT * FROM modules WHERE user_id = ?");
-                                $userModules->execute([$user['user_id']]);
-                                $modules = $userModules->fetchAll(PDO::FETCH_ASSOC);
+                            // Fetch user's modules
+                            $userModules = $pdo->prepare("SELECT * FROM modules WHERE user_id = ?");
+                            $userModules->execute([$user['user_id']]);
+                            $modules = $userModules->fetchAll(PDO::FETCH_ASSOC);
                             ?>
                             <ul>
                                 <?php foreach ($modules as $module): ?>
-                                    <li><?= $module['module_name'] ?></li>
-                                    <!-- Add more details as needed -->
+                                    <li class="text-decoration-none">
+                                        <?= $module['module_name'] ?>
+                                        <!-- Add more details as needed -->
+                                    </li>
                                 <?php endforeach; ?>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
+
 
             <!-- Modal for User's Posts -->
             <div class="modal fade" id="userPostsModal<?= $user['user_id'] ?>" tabindex="-1" aria-labelledby="userPostsModalLabel" aria-hidden="true">
